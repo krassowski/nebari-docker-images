@@ -44,15 +44,10 @@ RUN /opt/scripts/install-apt.sh
 # uncomment to install dev dependencies
 # RUN /opt/scripts/install-apt.sh /opt/nebari-workflow-controller/apt.txt  
 
-ARG SKIP_CONDA_SOLVE=no
 COPY scripts/install-conda-environment.sh /opt/scripts/install-conda-environment.sh
 COPY nebari-workflow-controller/environment.yaml /opt/nebari-workflow-controller/environment.yaml
 RUN \
-    if [ "${SKIP_CONDA_SOLVE}" != "no" ];then  \
-    ENV_FILE=/opt/nebari-workflow-controller/conda-linux-64.lock ; \
-    else  \
     ENV_FILE=/opt/nebari-workflow-controller/environment.yaml ; \
-    fi ; \
     /opt/scripts/install-conda-environment.sh "${ENV_FILE}" 'true'
 
 COPY nebari-workflow-controller /opt/nebari-workflow-controller
